@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Dark Sky Test Page</title>
+  </head>
+  <body>
+
+    <div id="entry">
+      <button id="ajax-button" type="button">Get Weather</button>
+    </div>
+
+    <div id="api-data">
+      Data will display here if test is successful.
+    </div>
+
+    <script>
+    var api = 'proxy.php';
+
+    function findWeather() {
+      var url = api;
+
+      var xhr = new XMLHttpRequest();
+      xhr.open('GET', url, true);
+      xhr.onreadystatechange = function () {
+        if(xhr.readyState < 4) {
+          showLoading();
+        }
+        if(xhr.readyState == 4 && xhr.status == 200) {
+          outputLocation(xhr.responseText);
+        }
+      };
+      xhr.send();
+    }
+
+    function showLoading() {
+      var target = document.getElementById('api-data');
+      target.innerHTML = 'Loading...';
+    }
+
+    function outputLocation(data) {
+      var target = document.getElementById('api-data');
+      //var json = JSON.parse(data);
+      target.innerHTML = '<pre>' + data + '</pre>';
+    }
+      var button = document.getElementById ("ajax-button");
+      button.addEventListener("click", findWeather);
+    </script>
+
+  </body>
+</html>
