@@ -1,46 +1,73 @@
+// darksky.js //
+// Uses ajax and jsonp to retreive current weather and forecasts
+// Powered by Dark Sky
+//------------------------------------------------------------------//
+// VARIABLES
+var api = '';
+var urlBase = 'https://api.darksky.net/forecast/';
+// Nakusp Hotsprings
+var latitude = '50.2963';
+var longitude = '-117.6857';
+var loc = latitude +','+ longitude;
+var url = urlBase + api + '/' + loc;
+var dsForecastUrl = "https://darksky.net/forecast/"+loc+"/ca12/en";
+
 // Create the function the JSON data will be passed to.
-function myfunc(json) {
+function weatherData(json) {
   // test container
-  var test_target = document.getElementById('api-data');
+  test_target = document.getElementById('api-data');
   // current date (timestamp)
-  var unixDate = $.now();
+  //unixDate = unx;
 
-  // converts timestamp array
-  function scDateTime(unixtimestamp){
-    // convert timestamp to date...
-    var rawDate = new Date(unixtimestamp);
-    // date to string...
-    var strDate = rawDate.toString();
-    // string to array
-    var arrDate = strDate.split(' ');
-    // return array
-    return arrDate;
+  // Convert timestamp into an array
+  function dateTime(aDate, request){
+    // Date from converted timestamp
+    rawDate = aDate;
+    // Convert to string...
+    strDate = rawDate.toString();
+    // String to array
+    arrDate = strDate.split(' ');
+    // Return requested data from array
+    if(request == "date"){
+      return arrDate[1] +" "+ arrDate[2] +", "+ arrDate[3];
+    } else if (request == "time") {
+      return arrDate[4];
+    } else {
+      return "Today...";
+    }
   }
-  // returns mmm dd, yyyy
-  function scDate (a){
-    var date = a[1] +" "+ a[2] +", "+ a[3];
-    return date;
-  }
-  // returns hh:mm:ss
-  function scTime (a){
-    var time = a[4];
-    return time;
-  }
-  // current date and time
-  now = scDate(scDateTime(unixDate))+"<br>"+scTime (scDateTime(unixDate));
 
+  // Current weather
+  ds_current_timestamp  = json.currently.time;
+  ds_current_full_date = Date(ds_current_timestamp);
+  ds_current_date = dateTime(ds_current_full_date, 'date');
+  ds_current_time = dateTime(ds_current_full_date, 'time');
+  ds_current_summary  = json.currently.summary;
+  ds_current_icon  = json.currently.icon;
+  ds_current_nearestStormDistance  = json.currently.nearestStormDistance;
+  ds_current_nearestStormBearing  = json.currently.nearestStormBearing;
+  ds_current_precipIntensity  = json.currently.precipIntensity;
+  ds_current_precipProbability  = json.currently.precipProbability;
+  ds_current_temperature  = json.currently.temperature;
+  ds_current_apparentTemperature  = json.currently.apparentTemperature;
+  ds_current_dewPoint  = json.currently.dewPoint;
+  ds_current_humidity  = json.currently.humidity;
+  ds_current_windSpeed  = json.currently.windSpeed;
+  ds_current_windBearing  = json.currently.windBearing;
+  ds_current_visibility  = json.currently.visibility;
+  ds_current_cloudCover  = json.currently.cloudCover;
+  ds_current_pressure  = json.currently.pressure;
+  ds_current_ozone  = json.currently.ozone;
 
-
-  test_target.innerHTML = now;
+  // Create Weather Widget
+  test_target.innerHTML = ds_current_time;
 }
-
-
 
 $.ajax({
   type: "GET",
-  url: "https://api.darksky.net/forecast/api/50.2399,-117.8011",
+  url: url,
   dataType: 'jsonp',
-  jsonpCallback: 'myfunc', // the function to call
+  jsonpCallback: 'weatherData', // the function to call
   jsonp: 'callback', // name of the var specifying the callback in the request
   error: function (xhr, errorType, exception) {
     var errorMessage = exception || xhr.statusText;
