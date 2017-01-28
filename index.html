@@ -14,38 +14,9 @@
       Data will display here if test is successful.
     </div>
 
-    <script>
-    var api = 'weather.data.php';
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 
-    function findWeather() {
-      var url = api;
-
-      var xhr = new XMLHttpRequest();
-      xhr.open('GET', url, true);
-      xhr.onreadystatechange = function () {
-        if(xhr.readyState < 4) {
-          showLoading();
-        }
-        if(xhr.readyState == 4 && xhr.status == 200) {
-          outputLocation(xhr.responseText);
-        }
-      };
-      xhr.send();
-    }
-
-    function showLoading() {
-      var target = document.getElementById('api-data');
-      target.innerHTML = 'Loading...';
-    }
-
-    function outputLocation(data) {
-      var target = document.getElementById('api-data');
-      var json = JSON.parse(data);
-      target.innerHTML = 'latitude: ' + json.latitude + '<br>longitude: ' + json.longitude + '<br>';
-    }
-      var button = document.getElementById ("ajax-button");
-      button.addEventListener("click", findWeather);
-    </script>
+    <script src="js/darksky.js"></script>
 
   </body>
 </html>
