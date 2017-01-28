@@ -15,7 +15,7 @@
     </div>
 
     <script>
-    var api = 'proxy.php';
+    var api = 'weather.data.php';
 
     function findWeather() {
       var url = api;
@@ -40,8 +40,8 @@
 
     function outputLocation(data) {
       var target = document.getElementById('api-data');
-      //var json = JSON.parse(data);
-      target.innerHTML = '<pre>' + data + '</pre>';
+      var json = JSON.parse(data);
+      target.innerHTML = 'latitude: ' + json.latitude + '<br>longitude: ' + json.longitude + '<br>';
     }
       var button = document.getElementById ("ajax-button");
       button.addEventListener("click", findWeather);
