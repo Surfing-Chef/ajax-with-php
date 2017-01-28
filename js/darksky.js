@@ -29,6 +29,8 @@ function myfunc(json) {
   // current date and time
   now = scDate(scDateTime(unixDate))+"<br>"+scTime (scDateTime(unixDate));
 
+
+
   test_target.innerHTML = now;
 }
 
@@ -36,7 +38,7 @@ function myfunc(json) {
 
 $.ajax({
   type: "GET",
-  url: "https://api.darksky.net/forecast/",
+  url: "https://api.darksky.net/forecast/api/50.2399,-117.8011",
   dataType: 'jsonp',
   jsonpCallback: 'myfunc', // the function to call
   jsonp: 'callback', // name of the var specifying the callback in the request
