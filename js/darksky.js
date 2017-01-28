@@ -3,7 +3,17 @@
 // Powered by Dark Sky
 //------------------------------------------------------------------//
 // VARIABLES
-var api = '';
+$.ajax({
+   url: './package.json',
+   async: false,
+   dataType: 'json',
+   success: function (data) {
+       mydata = data;
+       console.log(mydata);
+       myapi = data.api;
+   }
+});
+var api = myapi;
 var urlBase = 'https://api.darksky.net/forecast/';
 // Nakusp Hotsprings
 var latitude = '50.2963';
